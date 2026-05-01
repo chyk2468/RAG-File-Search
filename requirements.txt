@@ -1,0 +1,12 @@
+# Core RAG dependencies
+faiss-cpu
+numpy
+sentence-transformers
+llama-cpp-python
+PyMuPDF
+python-docx
+langchain-text-splitters
+scikit-learn
+streamlit
+torch
+transformers

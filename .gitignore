@@ -1,0 +1,22 @@
+# Large Model Files
+*.gguf
+
+# Vector Database and Metadata
+faiss_index.bin
+metadata.pkl
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+ENV/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Streamlit
+.streamlit/
