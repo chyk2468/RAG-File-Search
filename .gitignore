@@ -2,21 +2,41 @@
 *.gguf
 
 # Vector Database and Metadata
-faiss_index.bin
-metadata.pkl
+*.bin
+*.pkl
 
 # Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
 .venv/
 env/
 venv/
 ENV/
+build/
+dist/
+*.egg-info/
+
+# Data Files (Add specific files or directories)
+*.pdf
+*.txt
+!requirements.txt
+!README.md
 
 # OS Files
 .DS_Store
 Thumbs.db
+desktop.ini
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables
+.env
 
 # Streamlit
 .streamlit/
