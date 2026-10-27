@@ -1,75 +1,45 @@
-# Local Offline RAG System (RAG-File-Search)
+# Local Offline RAG System
 
-A powerful, privacy-focused Retrieval-Augmented Generation (RAG) system that runs entirely on your local machine. This tool allows you to chat with your local documents (PDFs, Text) without any data leaving your computer.
+A local document question-answering app that combines document ingestion, chunking, FAISS vector retrieval, and a GGUF-compatible language model.
 
-## 🚀 Features
-- **100% Offline:** No API keys required. Uses local LLMs (GGUF format) and local embedding models.
-- **Support for Multiple Formats:** Seamlessly ingest and search through PDF and TXT files.
-- **Fast Search:** Powered by **FAISS** (Facebook AI Similarity Search) for high-performance vector retrieval.
-- **Modern UI:** Includes a clean, interactive **Streamlit** web interface.
-- **CLI Mode:** For those who prefer the terminal.
-- **Smart Chunking:** Efficiently splits documents to maintain context and improve answer accuracy.
+**Stack:** Python, Streamlit, FAISS, local embeddings, GGUF-compatible LLM
 
-## 🏗️ Architecture
-The system follows a standard RAG pipeline:
-1.  **Ingestion:** Reads documents and splits them into manageable chunks.
-2.  **Storage:** Converts chunks into vector embeddings and stores them in a local FAISS index.
-3.  **Retrieval:** When a query is asked, the system finds the most relevant document chunks.
-4.  **Generation:** Passes the query and retrieved context to a local LLM (e.g., Qwen2.5-Coder) to generate a precise answer.
+![Local RAG workflow](docs/readme-architecture.svg)
 
-## 🛠️ Tech Stack
-- **LLM:** Qwen2.5-Coder-7B (or any GGUF-compatible model)
-- **Vector DB:** FAISS
-- **Frontend:** Streamlit
-- **Orchestration:** LangChain / Custom Python Pipeline
-- **Embeddings:** HuggingFace Local Embeddings
+## How it works
 
-## 📥 Installation
+1. Ingest supported documents from the configured local directory.
+2. Split extracted text into chunks with overlap.
+3. Create and persist a FAISS vector index.
+4. Retrieve relevant chunks for a user's question.
+5. Pass the retrieved context to the local language model and return an answer.
 
-1. **Clone the Repository:**
-   ```bash
-   git clone https://github.com/chyk2468/RAG-File-Search.git
-   cd RAG-File-Search
-   ```
+## Main modules
 
-2. **Install Dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+- `app.py`: Streamlit interface and pipeline controls
+- `ingestion.py`: document loading
+- `chunking.py`: chunk creation
+- `storage.py`: FAISS index persistence
+- `retrieval.py`: relevant-context search
+- `generation.py`: answer generation
 
-3. **Download a Model:**
-   Place your preferred `.gguf` model in the root directory. (e.g., `Qwen2.5-Coder-7B-Instruct-Q4_K_M.gguf`).
+## Run locally
 
-## 🖥️ Usage
-
-### Quick Start (Windows)
-Run the included batch file for an easy menu-driven experience:
 ```bash
-run_rag.bat
+git clone https://github.com/chyk2468/RAG-File-Search.git
+cd RAG-File-Search
+python -m venv .venv
 ```
 
-### Manual Launch
-**To run the Web UI:**
+Activate the environment and install the project's dependencies:
+
 ```bash
+pip install -r requirements.txt
 streamlit run app.py
 ```
 
-**To run the CLI version:**
-```bash
-python main.py
-```
+Use the sidebar to build the index or load an existing index. Place the selected GGUF model where `generation.py` expects it and review the model configuration before running inference.
 
-## 📁 Project Structure
-- `app.py`: Streamlit web interface.
-- `main.py`: Entry point for CLI mode.
-- `ingestion.py`: Document processing and chunking logic.
-- `retrieval.py`: FAISS search and context fetching.
-- `generation.py`: LLM interaction and response generation.
-- `storage.py`: Vector database management.
-- `.gitignore`: Configured to keep your large model files and indices private.
+## Privacy and limitations
 
-## 🛡️ Privacy
-Since this system is offline, your documents are never uploaded to any cloud service. Your data stays on your hardware.
-
----
-*Created by [chyk2468](https://github.com/chyk2468)*
+Documents and indices can remain on the local machine, but verify the exact model and embedding configuration used by your checkout. Local generation can still return unsupported statements, so validate answers against the retrieved passages.
