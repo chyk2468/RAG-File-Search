@@ -1,45 +1,79 @@
 # Local Offline RAG System
 
-A local document question-answering app that combines document ingestion, chunking, FAISS vector retrieval, and a GGUF-compatible language model.
+**Search local documents and generate answers grounded in retrieved context.**
 
-**Stack:** Python, Streamlit, FAISS, local embeddings, GGUF-compatible LLM
+[![GitHub](https://img.shields.io/badge/GitHub-Source-24292f?logo=github)](https://github.com/chyk2468/RAG-File-Search)
 
-![Local RAG workflow](docs/readme-architecture.svg)
+## 1. Project Title & Tagline
 
-## How it works
+Search local documents and generate answers grounded in retrieved context.
 
-1. Ingest supported documents from the configured local directory.
-2. Split extracted text into chunks with overlap.
-3. Create and persist a FAISS vector index.
-4. Retrieve relevant chunks for a user's question.
-5. Pass the retrieved context to the local language model and return an answer.
+## 2. Problem Statement
 
-## Main modules
+Users need to find answers across their own documents without manually opening each file. A local RAG pipeline retrieves relevant passages and passes them to a local language model.
 
-- `app.py`: Streamlit interface and pipeline controls
+## 3. Project Preview
+
+Add a screenshot or short GIF showing document ingestion, retrieved passages, and the generated answer.
+
+[Open interactive architecture](architecture.html)
+
+## 4. Overview
+
+The pipeline indexes document text, retrieves relevant passages for each query, and returns context-grounded results.
+
+## 5. Key Features
+
+- Ingest supported local documents.
+- Chunk text and build a local FAISS index.
+- Retrieve relevant passages for a question.
+- Generate an answer using a local GGUF-compatible model.
+
+## 6. Architecture / Workflow
+
+![Animated Local Offline RAG System workflow](docs/animated-workflow.svg)
+
+Open the [interactive architecture explorer](architecture.html) to select a stage and inspect its role.
+
+
+
+## 7. Tech Stack
+
+Python, Streamlit, FAISS, local embeddings, GGUF-compatible language model
+
+## 8. Installation & Setup
+
+```bash
+git clone https://github.com/chyk2468/RAG-File-Search.git
+cd RAG-File-Search
+python -m venv .venv
+pip install -r requirements.txt
+```
+
+## 9. Usage
+
+Run `streamlit run app.py`, ingest the selected documents, and ask a question about their contents. Configure the local model path expected by the generation module and check the retrieved passages to validate each answer.
+
+## 10. Project Structure
+
+- `app.py`: Streamlit interface
 - `ingestion.py`: document loading
 - `chunking.py`: chunk creation
 - `storage.py`: FAISS index persistence
 - `retrieval.py`: relevant-context search
 - `generation.py`: answer generation
 
-## Run locally
+## 11. Results & Demo
 
-```bash
-git clone https://github.com/chyk2468/RAG-File-Search.git
-cd RAG-File-Search
-python -m venv .venv
-```
+Add an example document, query, retrieved excerpts, and generated answer. Record retrieval settings and response time, and validate answers against their source passages.
 
-Activate the environment and install the project's dependencies:
+## 12. Future Enhancements
 
-```bash
-pip install -r requirements.txt
-streamlit run app.py
-```
+- Add source citations in answers.
+- Support incremental indexing and deletion.
+- Add tests for retrieval relevance.
+- Expose chunking and model settings in the UI.
 
-Use the sidebar to build the index or load an existing index. Place the selected GGUF model where `generation.py` expects it and review the model configuration before running inference.
+## 13. License
 
-## Privacy and limitations
-
-Documents and indices can remain on the local machine, but verify the exact model and embedding configuration used by your checkout. Local generation can still return unsupported statements, so validate answers against the retrieved passages.
+Check the source code, embedding model, and language model licences before redistribution.
